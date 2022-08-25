@@ -22,3 +22,5 @@ controls
 > i'm gonna use tech used in this demo for my future projects. spoiler alert, it's not about underwater, but rather, *above*water, and maybe even space. the tech is really simple but i needed to mess around with it to get hang of it
 - wait-wait-wait-wait, 3.5 hours and challenged by JohnTheCoolingFan?
 > yeah he literally challenged me to make "a short prototype/tech demo game about submarine, where you can walk inside submarine and submarine itself can move too. i don't think i can do this, but can you?". i accepted the challenge and made this.
+- is that blood in submarine? did i kill there?
+> nope, it's just rusty metal. nobody was killed there.
