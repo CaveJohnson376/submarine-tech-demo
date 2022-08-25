@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node
+
+export var submarine_active = false
+export var player_active = true
+var toggling = false
+
+var prev_vec :Vector2 = Vector2()
+var prev_upwards :float = 0.0
+
+signal submarine_movement(vector, vertical)
+signal character_movement(vector)
+
+signal controls_at_zero
+
+func _ready():
+	pass # Replace with function body.
+
+func _physics_process(delta):
+	var vec := Input.get_vector(\"left\", \"right\", \"forward\", \"backward\")
+	var upwards := Input.get_action_strength(\"up\")
+	if prev_vec != vec or prev_upwards != upwards:
+		if submarine_active:
+			emit_signal(\"submarine_movement\", vec, upwards)
+		if player_active:
+			emit_signal(\"character_movement\", vec)
+	if vec.length() == 0 and upwards == 0:
+		emit_signal(\"controls_at_zero\")
+	
+	
+	
+func toggle_submarine(): # this overcomplicated method requires player to stop pressing any keys for a moment. prevents drift.
+	if not toggling:
+		toggling = true
+		if player_active:
+			yield(self, \"controls_at_zero\")
+			player_active = false
+			submarine_active = true
+		elif submarine_active:
+			yield(self, \"controls_at_zero\")
+			submarine_active = false
+			player_active = true
+		else:
+			push_warning(\"someone fucked game up and controls are disabled. bruh. player controls activated\")
+			yield(self, \"controls_at_zero\")
+			player_active = true
+		toggling = false
+"
+
+[node name="controller_API" type="Node"]
+script = SubResource( 1 )
